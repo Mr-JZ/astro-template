@@ -1,11 +1,69 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Layout from "../layouts/Layout.astro";
+import { Picture } from "astro:assets";
+import astroLogo from "../assets/astro.svg";
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="Astro Starter" description="A production-ready Astro starter template with SEO, Tailwind CSS, React, MDX, and image optimization.">
+  <!-- Example: JSON-LD structured data via head slot -->
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Astro Starter",
+    "url": "https://example.com",
+  })} />
+
+  <div class="flex min-h-screen flex-col items-center justify-center px-4">
+    <a href="https://astro.build" class="mb-8">
+      <Picture
+        src={astroLogo}
+        alt="Astro Homepage"
+        widths={[115, 230]}
+        formats={["avif", "webp", "svg"]}
+        width={115}
+        height={48}
+        loading="eager"
+        fetchpriority="high"
+      />
+    </a>
+
+    <h1 class="mb-4 text-center text-4xl font-bold text-gray-900">
+      Welcome to your Astro Starter
+    </h1>
+
+    <p class="mb-8 max-w-lg text-center text-lg text-gray-600">
+      This template includes Tailwind CSS, React, MDX, sitemap, Sharp image optimization, and SEO out of the box.
+    </p>
+
+    <div class="flex flex-wrap justify-center gap-4">
+      <a
+        href="https://docs.astro.build"
+        class="rounded-lg bg-purple-600 px-6 py-3 font-semibold text-white transition-colors hover:bg-purple-700"
+      >
+        Read the docs
+      </a>
+      <a
+        href="https://astro.build/chat"
+        class="rounded-lg border border-gray-300 px-6 py-3 font-semibold text-gray-700 transition-colors hover:bg-gray-50"
+      >
+        Join Discord
+      </a>
+    </div>
+
+    <div class="mt-16 max-w-2xl text-sm text-gray-500">
+      <h2 class="mb-3 text-base font-semibold text-gray-700">What's included:</h2>
+      <ul class="grid grid-cols-1 gap-2 sm:grid-cols-2">
+        <li>Tailwind CSS for styling</li>
+        <li>React for interactive components</li>
+        <li>MDX for rich content</li>
+        <li>Sitemap generation</li>
+        <li>Sharp image optimization</li>
+        <li>SEO meta tags & Open Graph</li>
+        <li>JSON-LD structured data</li>
+        <li>Accessibility (skip-to-content)</li>
+        <li>Prefetch on hover</li>
+        <li>Picture component (AVIF/WebP)</li>
+      </ul>
+    </div>
+  </div>
 </Layout>

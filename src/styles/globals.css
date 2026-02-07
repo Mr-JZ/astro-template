@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Accessibility: Skip to main content */
+.skip-to-content {
+  @apply absolute -top-10 left-0 z-50 bg-white px-4 py-2 text-sm font-semibold transition-all focus:top-0;
+}
+
+/* Base typography */
+@layer base {
+  h1 {
+    @apply text-4xl font-bold tracking-tight md:text-5xl;
+  }
+
+  h2 {
+    @apply text-3xl font-bold tracking-tight md:text-4xl;
+  }
+
+  h3 {
+    @apply text-2xl font-semibold md:text-3xl;
+  }
+
+  h4 {
+    @apply text-xl font-semibold md:text-2xl;
+  }
+
+  h5 {
+    @apply text-lg font-semibold md:text-xl;
+  }
+
+  h6 {
+    @apply text-base font-semibold md:text-lg;
+  }
+}
+
+/* Utility classes */
+@layer components {
+  .container-default {
+    @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .section-padding {
+    @apply py-16 md:py-24;
+  }
+}
