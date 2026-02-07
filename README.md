@@ -1,46 +1,31 @@
-# Astro Starter Kit: Basics
+# Astro Starter Template
 
-```sh
-bun create astro@latest -- --template basics
-```
+Production-ready Astro 5 starter with Tailwind CSS, React, MDX, sitemap, Sharp image optimization, and SEO.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Commands
 
-## 🚀 Project Structure
+| Command          | Action                              |
+| ---------------- | ----------------------------------- |
+| `bun install`    | Install dependencies                |
+| `bun run dev`    | Start dev server at `localhost:4321` |
+| `bun run build`  | Build production site to `./dist/`  |
+| `bun run preview`| Preview production build locally    |
 
-Inside of your Astro project, you'll see the following folders and files:
+## Deployment
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
-```
+The site deploys automatically via GitHub Actions (`.github/workflows/deploy.yml`) on push to `main`. It can also be triggered manually via `workflow_dispatch`.
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+### Pipeline
 
-## 🧞 Commands
+1. **Build** — Uses `withastro/action@v2` with Bun and Node 22 to build the site; uploads `dist/` as an artifact
+2. **Deploy** — Downloads the artifact and uploads `dist/*` to the SFTP server via `wlixcc/SFTP-Deploy-Action@v1.2.4`
 
-All commands are run from the root of the project, from a terminal:
+### Required GitHub Secrets
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `bun install`             | Installs dependencies                            |
-| `bun dev`             | Starts local dev server at `localhost:4321`      |
-| `bun build`           | Build your production site to `./dist/`          |
-| `bun preview`         | Preview your build locally, before deploying     |
-| `bun astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `bun astro -- --help` | Get help using the Astro CLI                     |
+Set these in **Settings → Secrets and variables → Actions** in the GitHub repository.
 
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+| Secret | Description |
+| --- | --- |
+| `SFTP_SERVER` | SFTP server hostname or IP |
+| `SFTP_USERNAME` | SFTP login username |
+| `SFTP_PASSWORD` | SFTP login password |
