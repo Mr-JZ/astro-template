@@ -23,3 +23,5 @@ Custom i18n using Astro's built-in `i18n` config with `prefixDefaultLocale: fals
 - Image optimization: `docs/IMAGES.md`
 - SEO & Layout component: `docs/SEO.md`
 - i18n setup & patterns: `docs/I18N.md`
+- Deployment (nginx image, Depot CI, Dokploy): `docs/DEPLOYMENT.md`
+- Newsletter through nginx, API key stays on the server: `docs/NEWSLETTER.md`
