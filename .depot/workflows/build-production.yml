@@ -1,0 +1,65 @@
+name: Build and Deploy Production
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: production-deploy
+  cancel-in-progress: true
+
+# Fill these in per site; docs/DEPLOYMENT.md explains where each value comes from.
+env:
+  DOKPLOY_URL: https://deploy.zisenis.digital
+  REGISTRY_HOST: 4x482hv9d1.registry.depot.dev
+  DEPOT_PROJECT_ID: ""
+  DOKPLOY_APP_ID: ""
+
+jobs:
+  build-and-deploy:
+    runs-on: depot-ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Validate required configuration
+        env:
+          DEPOT_PULL_TOKEN: ${{ secrets.DEPOT_PULL_TOKEN }}
+          DOKPLOY_TOKEN: ${{ secrets.DOKPLOY_TOKEN }}
+        run: |
+          set -euo pipefail
+          for name in DEPOT_PROJECT_ID DOKPLOY_APP_ID DEPOT_PULL_TOKEN DOKPLOY_TOKEN; do
+            if [ -z "${!name:-}" ]; then
+              echo "Missing required Depot CI configuration: ${name}" >&2
+              exit 1
+            fi
+          done
+
+      - name: Set up Depot CLI
+        uses: depot/setup-action@v1
+
+      # Depot CI injects DEPOT_TOKEN, so saving to the Depot Registry needs no login step.
+      # PUBLIC_* values go in as build-args, because Astro inlines them into the static pages.
+      - name: Build and save image
+        uses: depot/build-push-action@v1
+        with:
+          project: ${{ env.DEPOT_PROJECT_ID }}
+          context: .
+          platforms: linux/amd64
+          save: true
+          save-tags: |
+            ${{ github.sha }}
+            production
+
+      - name: Roll out on Dokploy
+        env:
+          DEPOT_PULL_TOKEN: ${{ secrets.DEPOT_PULL_TOKEN }}
+          DOKPLOY_TOKEN: ${{ secrets.DOKPLOY_TOKEN }}
+        run: |
+          set -euo pipefail
+          image="${REGISTRY_HOST}/${DEPOT_PROJECT_ID}:${GITHUB_SHA}"
+          bash scripts/ci/update-dokploy-service.sh "$DOKPLOY_APP_ID" "$image"
+          bash scripts/ci/deploy-dokploy-service.sh "$DOKPLOY_APP_ID"

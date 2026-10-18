@@ -67,10 +67,16 @@ public/            # Static files (favicon, robots.txt)
 - [`docs/IMAGES.md`](docs/IMAGES.md) — Image optimization with `<Picture>` and `<Image>`
 - [`docs/SEO.md`](docs/SEO.md) — SEO meta tags and Layout component
 - [`docs/I18N.md`](docs/I18N.md) — Multi-language setup and translation patterns
+- [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) — nginx Docker image built on Depot CI and run on Dokploy
+- [`docs/NEWSLETTER.md`](docs/NEWSLETTER.md) — Newsletter signups through nginx without exposing the API key
 
 ## Deployment
 
-The site deploys automatically via GitHub Actions (`.github/workflows/deploy.yml`) on push to `main`. It can also be triggered manually via `workflow_dispatch`.
+Recommended: build a small nginx image on Depot CI and run it on Dokploy (`Dockerfile`, `deploy/nginx.conf`, `.depot/workflows/build-production.yml`). See [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) for setup and [`docs/NEWSLETTER.md`](docs/NEWSLETTER.md) for a newsletter form.
+
+### SFTP alternative
+
+The site can also deploy via GitHub Actions (`.github/workflows/deploy.yml`) on push to `main`. It can also be triggered manually via `workflow_dispatch`.
 
 ### Pipeline
 

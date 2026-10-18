@@ -1,0 +1,10 @@
+# Allowlist: the image only needs what `astro build` reads, plus the nginx config.
+*
+!src
+!public
+!astro.config.mjs
+!tailwind.config.mjs
+!tsconfig.json
+!package.json
+!bun.lock
+!deploy/nginx.conf
